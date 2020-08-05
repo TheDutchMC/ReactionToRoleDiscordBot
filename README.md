@@ -3,6 +3,9 @@ Spigot 1.13+, even though it has nothing to do with Minecraft.
 
 This plugin/bot gives the user a role when they react with an emoji to a specified message.
 
+### Why in the world is this  a Spigot plugin?
+So, a lot of people have a Minecraft server, but no seperate server available for hosting a Discord bot. This way, the bot just piggybacks off of your Minecraft server :)
+
 ## Installation
 1. Download the latest jar from [here](https://github.com/TheDutchMC/ReactionToRoleDiscordBot/releases)
 2. Drop the downloaded jar in your plugins folder
