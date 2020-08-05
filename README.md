@@ -1,6 +1,8 @@
 # ReactionToRoleDiscordBot
 Spigot 1.13+, even though it has nothing to do with Minecraft.
 
+This plugin/bot gives the user a role when they react with an emoji to a specified message.
+
 ## Installation
 1. Download the latest jar from [here](https://github.com/TheDutchMC/ReactionToRoleDiscordBot/releases)
 2. Drop the downloaded jar in your plugins folder
