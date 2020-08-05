@@ -1,0 +1,66 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+}
+
+allprojects {
+	
+	//Both set in gradle.properties
+	version = pluginVersion
+	group = pluginGroup
+	
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	
+	repositories {
+		mavenCentral()
+    	jcenter()
+    
+	    //Spigot
+    	maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots" }
+	
+		//Sonatype, required for the Bungee API, which comes with Spigot
+		maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+	}
+	
+	processResources {
+        from(sourceSets.main.resources.srcDirs) {
+            filter ReplaceTokens, tokens: [version: version]
+        }
+    }
+}
+
+dependencies {
+	//Spigot API
+	compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
+
+	//JDA, for hooking into Discord
+	compile ('net.dv8tion:JDA:4.2.0_168') {
+		exclude module: 'opus-java' 
+	}
+	
+	compile group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
+	
+}
+
+task testJar(type: ShadowJar) {
+	
+	description 'Build a test Jar'
+	archiveClassifier = 'DEV'
+	from sourceSets.main.output
+	configurations = [project.configurations.runtime]
+	destinationDirectory = file("$rootDir/server/plugins")
+}
+
+task releaseJar(type: ShadowJar) {
+
+	description 'Build a release Jar'
+	archiveClassifier = 'RELEASE'
+	from sourceSets.main.output
+	configurations = [project.configurations.runtime]
+	destinationDirectory = file("$rootDir/releases")
+}
