@@ -2,3 +2,4 @@ name: ReactionToRole
 main: nl.thedutchmc.reactiontorole.ReactionToRole
 version: @version@
 author: TheDutchMC
+api-version: 1.13
