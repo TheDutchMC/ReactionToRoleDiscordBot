@@ -1,5 +1,8 @@
 package nl.thedutchmc.reactiontorole;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.security.auth.login.LoginException;
 
 import org.bukkit.Bukkit;
@@ -7,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import nl.thedutchmc.reactiontorole.discordEvents.MessageReactionAddEventListener;
 import nl.thedutchmc.reactiontorole.discordEvents.MessageReactionRemoveEventListener;
 
@@ -29,7 +33,15 @@ public class ReactionToRole extends JavaPlugin {
 		
 		//log in to Discord
 		try {
-			jda = JDABuilder.createDefault(ConfigurationHandler.discordToken).build();
+			
+			List<GatewayIntent> intents = new ArrayList<>();
+			intents.add(GatewayIntent.GUILD_MESSAGE_REACTIONS);
+			intents.add(GatewayIntent.GUILD_MESSAGES);
+			
+			jda = JDABuilder.createDefault(ConfigurationHandler.discordToken)
+					.enableIntents(intents)
+					.build();
+					
 			jda.awaitReady();
 		} catch (LoginException e) {
 			logWarn("Unable to log in to Discord! Check your config!");
